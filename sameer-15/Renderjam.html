@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <title>Render jam</title>
+
+
+    <script id="vertex-shader" type="x-shader/x-vertex">
+#version 300 es
+
+    in vec4 vPosition;
+    in vec3 vColors;
+    out vec4 aColor;
+
+    uniform vec3 uTheta;
+      
+      void
+      main()
+      {
+        //gl_Position = vPosition;
+        //aColor = vColors;
+
+        aColor = vec4(vColors, 1.0);
+    
+        vec3 angles = radians(uTheta);
+        vec3 c = cos(angles);
+        vec3 s = sin(angles);
+    
+        mat4 rx = mat4(1.0,  0.0,  0.0, 0.0,
+            0.0,  c.x,  s.x, 0.0,
+            0.0, -s.x,  c.x, 0.0,
+            0.0,  0.0,  0.0, 1.0);
+    
+        mat4 ry = mat4(c.y, 0.0, -s.y, 0.0,
+            0.0, 1.0,  0.0, 0.0,
+            s.y, 0.0,  c.y, 0.0,
+            0.0, 0.0,  0.0, 1.0);
+    
+    
+        mat4 rz = mat4(c.z, s.z, 0.0, 0.0,
+            -s.z,  c.z, 0.0, 0.0,
+            0.0,  0.0, 1.0, 0.0,
+            0.0,  0.0, 0.0, 1.0);
+    
+    
+        gl_Position = rz * ry * rx * vPosition;
+        gl_Position.z = -gl_Position.z;
+        gl_PointSize = 10.0;      
+      }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+#version 300 es
+      precision highp float;
+      in vec4 aColor;
+      out vec4 fragColor;
+
+      void
+      main()
+      {
+	      fragColor = aColor;
+      }
+    </script>
+
+
+    <script src="http://interactivecomputergraphics.com/8E/Code%20update/Common/initShadersES6.js"></script>
+    <script src="http://interactivecomputergraphics.com/8E/Code%20update/Common/MVES6.js"></script>
+
+
+    <script type="text/javascript" src="Renderjam.js"></script>
+  </head>
+
+  <body style="background-color:rgb(52, 64, 66);">
+    <br><br><br><br><br>  
+    <center>
+        <h1 >Hypercube(tesseract)</h1>
+    <p><h4>Description: </h4> We have always worked on 3-d objects but I wanted to step-up a bit and explore the 4th dimention. While researching I learned that 
+    it is impossible to visualize a 4-d image. Since the max we can do is create a 3-d image on a 2d screen by adding some sense of depth to the scene. I also came
+across this amazing shape called tesseract or hypercube. It's one of 4-d objects and when we view it in 3-d it would look like a cube within a cube. In geometry,
+ a tesseract is the four-dimensional analogue of the cube; the tesseract is to the cube as the cube is to the square. Just as the surface of the cube consists of
+  six square faces, the hypersurface of the tesseract consists of eight cubical cells.  This shape is so facinating that it is used even in unity game engine's. 
+Inspired from that I have created this where the inner-cube represents the foundation of color (RGB model or CMY model with 4th color being when all are three are mixed) and the outer cube represents all the different
+objects that can be creaated using that foundation. I have also tried to should movement in 4th dimention, which in a 3-d scene would just look like the object is
+moving closer or far from eye/viewer. </p>
+
+<p><h4>Controls: </h4> move the slider to move the cube in 4th dimention or along the w-axis <br>
+press 't'or 'T' to toggle between different color models.  </p>
+
+    <canvas id="gl-canvas" width="512" height="512" style="border: 1px solid black;">
+      Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
+    <h2 id="header">RGB Model!</h2>
+    <input type="range" min="0.5" max="1.5" value="1" class="slider" step="0.01" id="myRange">
+    
+  </center>
+  <div style="text-align:center">
+    <a href="../shehryar-15/space.html" target="_parent"><button>Next Render</button></a>
+    </div>
+  </body>
+
+</html>

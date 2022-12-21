@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mesh</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript"
+        src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=K5n6te9GNHO1rVfbX0IBWCu-LdfE2PzwtOjUP3eWhLMNAj1pV93ZSRb4ytPnC_iUcPgX519HY-O6bx-CWdrbzgzj6dWloUBTZ8cV0J56tMdfLsQMllRCV0uEGPofs-6yLd7reh7TmjwSA5Y2SQJfoGrvOzQbQneEcCAYahxrGwzR3jS3bjygyG-qSFJLOTFoPK7f9SF_lv8XNfzfvQrgwClHphnTTsPk7xlN4HixR0QSZJbVn7GKj-aNxATILowpnwf7czrg7sf3gZtU1QETTPZC2ij1bVP_F4JAR9If7ZRA8MWq8u1uh2m5iHZCXGhssKhsuEQ-gDQnaJRdg3nVqdAIsUCxHA29ZNJLkGV5-b0rV9np7tyUEB7Io_kiNFb8nVoCxqu6VdZZiBXBth0WIIx1VYoWweRfu9mhHXsUOmBbYt15Z_ViHqY8mumhtcQCT6QoFQD7Y6r9syT7JM0DHmaN91riN9C665MBWT3cqFOwGFe6xGtzi-DuwKBiUcuHLRMFStrEqJgP00ABNVBwAV8FN0Jv2JD_1NG9ajiaB8TPU4yQg_U_g0QxlcUJwd-gttMhYHXic8BpJaOcErjiMUWsFs0qQM5qb7x2rGTcJ8nqZ9jqEmP_dIw0BIKRGSJbqD3cQumeOT53-AVQC-0NVw"
+        charset="UTF-8"></script>
+
+
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        #version 300 es
+
+        in vec4 vPosition;
+        in vec3 vColors;
+        out vec3 aColor;
+
+        void
+        main()
+        {
+            gl_Position = vPosition;
+            aColor = vColors;
+            gl_PointSize = 100.0;
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+    #version 300 es
+    precision highp float;
+    in vec3 aColor;
+    out vec4 fragColor;
+
+
+    void
+    main()
+    {   
+
+        fragColor =  vec4(aColor, 1.0);
+    }
+    </script>
+
+
+    <script src="http://interactivecomputergraphics.com/8E/Code%20update/Common/initShadersES6.js"></script>
+    <script src="http://interactivecomputergraphics.com/8E/Code%20update/Common/MVES6.js"></script>
+    <script type="text/javascript" src="jam1.js"></script>
+    <style>
+        canvas {
+            display: inline-block;
+            margin: auto;
+            padding: 0;
+            border: black;
+            background-color: black;
+        }
+
+        body {
+            background-color: black;
+        }
+        h1{
+            font-family: 'Courier New', Courier, monospace;
+            color: blue;
+        }
+        h2{
+            font-family: 'Courier New', Courier, monospace;
+            color: red;
+        }
+            button {
+    background-color: white; /* Green */
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    }
+    </style>
+
+
+</head>
+
+
+<body>
+    <div style="width: 1000; float:left; height:1000;; margin:10px">
+        <h1>MousePad</h1>
+        <canvas id="gl-canvas" width="1000" height="1000">
+            Oops ... your browser doesn't support the HTML5 canvas element
+        </canvas>
+    </div>
+    </script>
+    <h1>Power</h1>
+    <button onclick="turnRainbowOff(); turnCycleOff(); turnDiscoOff(); turnBreatheOff(); changeGlow(0.1,0.1,0.1);">Turn
+        Off</button>
+
+    <h1>Strip Modes</h1>
+
+    <h2>Disco Mode</h1>
+        <button onclick="turnDiscoOn();">Toggle</button>
+        <input type="range" min="-150" max="0" value="-50" id = "discoScale" oninput="changeDiscoSpeed()"> 
+        <h2>Breathe Mode</h1>
+            <button onclick="turnBreatheOn();">Toggle</button>
+            <input type="range" min="-120" max="0" value="-100" id = "breatheScale" oninput="changeBreatheSpeed()"> 
+            <h2>Cycle Mode</h1>
+                <button onclick="turnCycleOn();">Toggle</button>
+                <input type="range" min="-175" max="0" value="-50" id = "cycleScale" oninput="changeCycleSpeed()"> 
+                <h2>Rainbow Mode</h1>
+                    <button onclick="turnRainbowOn();">Toggle</button>
+                    <input type="range" min="-125" max="0" value="-33" id = "rainbowScale" oninput="changeRainbowSpeed()"> 
+                    <h2>Flat On</h1>
+                        <h2>Color</h2>
+                            <textarea name="R" id="color1">1</textarea>
+                            <textarea name="G" id="color2">1</textarea>
+                            <textarea name="B" id="color3">1</textarea>
+                            <h2></h2>
+                        <button
+                            onclick="turnRainbowOff(); turnCycleOff(); turnDiscoOff(); turnBreatheOff(); changeGlow(1,0,0)">Red</button>
+                        <button
+                            onclick="turnRainbowOff(); turnCycleOff(); turnDiscoOff(); turnBreatheOff(); changeGlow(0,1,0)">Green</button>
+                        <button
+                            onclick="turnRainbowOff(); turnCycleOff(); turnDiscoOff(); turnBreatheOff(); changeGlow(0,0,1)">Blue</button>
+                        <button
+                            onclick="turnRainbowOff(); turnCycleOff(); turnDiscoOff(); turnBreatheOff(); changeGlow(1,1,0)">Yellow</button>
+                        <button
+                            onclick="turnRainbowOff(); turnCycleOff(); turnDiscoOff(); turnBreatheOff(); changeGlow(0,1,1)">Cyan</button>
+                        <button
+                            onclick="turnRainbowOff(); turnCycleOff(); turnDiscoOff(); turnBreatheOff(); changeGlow(1,0,1)">Pink</button>
+                        <button
+                            onclick="turnRainbowOff(); turnCycleOff(); turnDiscoOff(); turnBreatheOff(); changeGlow(1,0.5,0)">Orange</button>
+                        <button onclick="turnRainbowOff(); turnCycleOff(); turnDiscoOff(); turnBreatheOff(); changeGlow(
+        document.getElementById('color1').value,
+        document.getElementById('color2').value,
+        document.getElementById('color3').value)">Custom Color</button>
+
+
+</body>
+<body, style="text-align:center">
+    <p style="color:whitesmoke">
+        <br><br><br><br><br><br>
+        Title: RGB MousePad
+        <br>
+        Name: Saad Abdul Hakim Qureshi
+        <br>
+        Country: Pakistan
+        <br>
+        Email:saadqureshi135@outlook.com
+        <br>
+        Renderer: WEBGL2
+        <br>
+        <br>
+        Description:
+        <br>
+        The renderer is of an MousePad with an RGB strip around it.
+        <br>
+        <br>
+        How the MousePad is rendered:
+        <br>
+        For rendering the texture on the mousepad itself I have created 8 polygons.
+        <br>
+        1 for the lower left texture.
+        1 for the upper right texutre.
+        3 polygons each forming the two textures in the middle.
+        <br>
+        I have assigned the respective color for each polygon.
+        <br>
+        <br>
+        How the strip is created:
+        <br>
+        I have created an algorithm that starts from the upper left vertex of the mousepad moving right then down then
+        left then up and during this movement it is essentially creating a small set of triangles around the mousepad which have colors assigned to them.
+        <br>
+        <br>
+        How the strip is animated:
+        <br>
+        For each of the modes I have simply created different functions that assign colors to the triangles around the mousepad. For each animation I have added a sleep command in the render function.
+        <br>
+        <br>
+        Breathe:
+        <br>
+        Changes the color of all strips around the mousepad from black to color in 4 stages.
+        <br>
+        <br>
+        Rainbow:
+        <br>
+        Changes the left strip, then assings the same color to botom strip, then right strip then top strip while also
+        changing colors of previous strips.
+        <br>
+        <br>
+        Cycle:
+        <br>
+        Changes color around mousepad in cycle fashion.
+        <br>
+        <br>
+        Disco:
+        <br>
+        Changes color around mousepad in fast motion.
+        <br>
+        <br>
+        Speed Bar:
+        <br>
+        Changes the value passed to sleep function.
+
+
+    </p>
+    <div>
+        <a href="../vote.html" target="_parent"><button>Move to Voting Booth</button></a>
+        </div>
+</body>
+
+</html>

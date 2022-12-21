@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r75/three.min.js"></script>
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/490192/GPUParticleSystem.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Particles</title>
+
+
+
+</head>
+
+<body>
+    <!-- <script type="text/javascript" src="particle.js"></script> -->
+    <!-- onclick="showCoords(event)" -->
+    <!-- <div onclick="showCoords(event)"><p id="try"></p></div> -->
+    <!-- <script>
+        function showCoords(event) {
+          var x = event.clientX;
+          var y = event.clientY;
+          var coords = "X coords: " + x + ", Y coords: " + y;
+          document.getElementById("try").innerHTML = coords;
+          console.log(coords)
+        }
+        </script> -->
+        <p style="color:red">This is just a cool effet I created with prticle systems.</p>
+        <p style="color:rgb(255, 255, 255)">I used the following library for rendering particle systems on GPU: https://github.com/flimshaw/THREE.GPUParticleSystem.git . 
+          Although I origanlly tried to create the particle system from scratch on my own as well. 
+          But there were a bunch of complications invloved like how to make particles know of each others position while rendeing on GPU. Which all seemed a bit out of scope of this assignment, so this library takes care or a lot of lower level complications in creating a particle system. Although understanding this library was then a big challenge on it own due to lack of documentation.
+          Originally I was aiming to create a fire like effect but in doing so I stumbled upon this twisting effect of particles. 
+          Here we have a different effect which models something like some sort of energy originating from a spot and turing around it and slowly fade away.
+          This is something which you may see in anime where a charater powers up so you have such effects around the character.
+          
+        </p>
+        <div style="text-align:center">
+        <a href="../meesum-14/julia.html" target="_parent"><button>Next Render</button></a>
+        </div>
+        <!-- <p style="color:blue">This is another paragraph.</p> -->
+        <script type="text/javascript" src="particle.js"></script>
+        <!-- <div
+            style="
+                font-family: 'Times New Roman', Times, serif;
+                font-size: large;
+            "
+        >
+            <b>
+                <h1 style="text-align: left;">Flight Simulator</h1>
+            </b>
+            <p style="text-align: left;">Instructions:</p>
+            <p style="text-align: left;">
+                Shift + 1 to Vary Left<br />
+                Shift + 2 to Vary Right<br />
+                Shift + 3 to Vary Top<br />
+                Shift + 4 to Vary Bottom<br />
+                Shift + 5 to Vary Near<br />
+                Shift + 6 to Vary Far<br />
+                W to Pitch Up <br />
+                S to Pitch Down<br />
+                A to Yaw Left<br />
+                D to Yaw Right<br />
+                Q to Roll Left<br />
+                E to Roll Right<br />
+                Up key to Increase Speed<br />
+                Down to Decrease Speed <br />
+                C to Switch Shading<br />
+                Escape key to Quit
+            </p>
+        </div> -->
+        
+</body>
+
+
+
+</html>

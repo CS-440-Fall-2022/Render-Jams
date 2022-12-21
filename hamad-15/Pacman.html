@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Pacman</title>
+
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec4 vPosition;
+        attribute vec3 vColor;
+        varying vec4 vColorF;
+        uniform float center_x;
+        uniform float center_y;
+        uniform float radius;
+        uniform float height;
+        uniform float width;
+        uniform vec3 rndclr;
+        uniform float clc;
+        void main(){
+            gl_PointSize = 1.0;
+            gl_Position = vPosition;
+            vColorF = vec4(rndclr.x*clc, rndclr.y*clc, rndclr.z*clc, 1.0);
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float; 
+        varying float offset;
+        varying vec4 vColorF;
+        uniform float center_x;
+        uniform float center_y;
+        uniform float radius;
+        uniform float height;
+        uniform float width;
+        uniform float t1;
+        uniform float t2;
+        uniform float clc;
+        uniform vec3 rndclr;
+        int inArea(float X, float Y, float cX, float cY, float r){
+            float m1 = tan(t1);
+            float m2 = tan(t2);
+            if (sqrt((X - cX)*(X - cX) + (Y - cY)*(Y - cY)) <= r){
+                if ((Y-cY) <= m1*(X-cX) && (Y-cY) >= m2*(X-cX)){
+                    return 2;
+                }
+                else{
+                    return 1;
+                }
+            }
+            else if (X-cX-0.001 <= r && X-cX+0.001 >= -r && Y-cY-0.001 <= r && Y-cY+0.001 >= -r){
+                return 2;
+            }
+            else{
+                return 0;
+            }
+        } // What does this draw? (assume entire screen is rendered) 
+        // bool inArea(float cX, float cY) {if (cX < 40.0 && cX > -40.0 && cY < 40.0 && cY > -40.0){return true;} else {return false;}}
+        void main() {
+            float x_val = 2.0*(gl_FragCoord.x - width/2.0)/width;
+            float y_val = 2.0*(gl_FragCoord.y - height/2.0)/height;
+            int result = inArea(x_val, y_val, center_x, center_y, radius);
+            if (result == 1){
+                gl_FragColor = vec4(1.0, 1.0, 0.0, 1.0);
+                //gl_FragColor = vColorF;
+            }
+            else if (result == 2){
+                gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+            }
+            else{
+                gl_FragColor = vColorF;
+            }
+        } </script>
+
+            <script type="text/javascript" src="Common/webgl-utils.js"></script>
+            <script type="text/javascript" src="Common/initShaders.js"></script>
+            <script type="text/javascript" src="Common/MV.js"></script>
+            <script type="text/javascript" src="Pacman.js"></script>
+</head>
+<style>
+    canvas, #gl-canvas{
+        align-content: center;
+        text-align: center;
+    }
+    div {
+        font-family: consolas;
+        align-content: center;
+        text-align: center;
+        color: deeppink;
+    }
+    body{
+        background-color: black;
+    }
+    h1, h2, h3{
+        font-family: consolas;
+        color: rgb(223, 30, 133);
+        text-align: center;
+
+    }
+</style>
+<body>
+    <h1>
+        PACMAN: Self-Rendered
+    </h1>
+    <h2>
+        Made by "The OC"
+    </h2>
+    <h2>
+        (The Official, the original, the only Club that matters)
+    </h2>
+    <div>
+        <canvas id="gl-canvas" width="600" height="600">
+            Oops ... your browser doesn't support the HTML5 canvas element
+        </canvas>
+    </div>  
+    <h2>
+        About the Render
+    </h2>
+    <h3>Overview and Usage</h3>
+    <div>
+        This Render is a Mock of the Classic Arcade Game "Pacman". The render is an interactive render, in which we can move Pacman back-and-forth and make him walk any path. The colors fade and change continously which is done to make the render look horrific. Moreover, If we go from one of the openings in the middle, we end up getting on the other side of the opening
+    </div>
+    <h3>How it was Rendered</h3>
+    <div>
+        The Borders and the obstacles were rendered by rendering rectangles as a combination of two triangles. Calculations for the width, height , position, etc. of the borders and obstacles was done before hand and then the scene was hardcoded into the code. Next, Pacman was made by having the information of the center and the radius. Then using the equation of circle in the shader, it was rendered. The most challenging and joyful part was the continuous opening and closing of Pacman's Mouth. This was implemented by determining two equations of lines which represent the upper and the lower lip of the pacman. Then these equations were use to determine which points lie within them and they were colored black and the rest are colored yellow. There's a variable for theta (angle for opening of Pacman's lip) that will increase and decrease causing the pacman to open and close his mouth. For the intersection, The equations of triangle-triangle intersecion were used. Pacman's circle was approximated as a rectangle which is a combination of two triangles and hence these two trianlges were then checked whether they intersect with any other triangle in the scene or not. If they do, we donot move in that direction as we reach an obstacle. For the color, random numbers are being generated after evey 100 iterations which are responsible for changing the color. Similarly, there's a parameter that increase or decrease the visibility of the colors. All when combined together gives you this renowned version of the classic PacMan Game with limited interactive mode.
+    </div>
+    <div style="text-align:center">
+    <a href="../maha-15/render_jam.html" target="_parent"><button>Next Render</button></a>
+</div>
+</body>
+
+</html>

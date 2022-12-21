@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>
+        Title: RGB MousePad
+        <br>
+        Name: Saad Abdul Hakim Qureshi
+        <br>
+        Country: Pakistan
+        <br>
+        Email:saadqureshi135@outlook.com
+        <br>
+        Renderer: WEBGL2
+        <br>
+        <br>
+        Description:
+        <br>
+        The renderer is of an MousePad with an RGB strip around it.
+        <br>
+        <br>
+        How the MousePad is rendered:
+        <br>
+        For rendering the texture on the mousepad itself I have created 8 polygons.
+        <br>
+        1 for the lower left texture.
+        1 for the upper right texutre.
+        3 polygons each forming the two textures in the middle.
+        <br>
+        I have assigned the respective color for each polygon.
+        <br>
+        <br>
+        How the strip is created:
+        <br>
+        I have created an algorithm that starts from the upper left vertex of the mousepad moving right then down then
+        left then up and during this movement it is essentially creating a small set of triangles around the mousepad which have colors assigned to them.
+        <br>
+        <br>
+        How the strip is animated:
+        <br>
+        For each of the modes I have simply created different functions that assign colors to the triangles around the mousepad. For each animation I have added a sleep command in the render function.
+        <br>
+        <br>
+        Breathe:
+        <br>
+        Changes the color of all strips around the mousepad from black to color in 4 stages.
+        <br>
+        <br>
+        Rainbow:
+        <br>
+        Changes the left strip, then assings the same color to botom strip, then right strip then top strip while also
+        changing colors of previous strips.
+        <br>
+        <br>
+        Cycle:
+        <br>
+        Changes color around mousepad in cycle fashion.
+        <br>
+        <br>
+        Disco:
+        <br>
+        Changes color around mousepad in fast motion.
+        <br>
+        <br>
+        Speed Bar:
+        <br>
+        Changes the value passed to sleep function.
+
+
+    </p>
+</body>
+
+</html>

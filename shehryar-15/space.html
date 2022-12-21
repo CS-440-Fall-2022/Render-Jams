@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <title>Render Jam - sa06442</title>
+
+    <!--************************************************************************************* 
+      References
+      https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/06/wireSphere.html
+      https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/06/shadedCube.html
+    ************************************************************************************* -->
+
+    <script id="vertex-shader" type="x-shader/x-vertex">
+#version 300 es
+
+    in vec4 vPosition;
+    in vec4 aNormal;
+    out vec3 N, L, E;
+
+    uniform vec3 uTheta;
+    uniform mat4 uModelViewMatrix;
+    uniform mat4 uProjectionMatrix;
+    uniform vec4 uLightPosition;
+    uniform mat3 uNormalMatrix;
+    
+      
+      void
+      main()
+      {
+        vec3 light;
+        vec3 pos = (uModelViewMatrix * vPosition).xyz;
+        if(uLightPosition.z == 0.0)  L = normalize(uLightPosition.xyz);
+        else  L = normalize(uLightPosition).xyz - pos;
+    
+        E =  -normalize(pos);
+        N = normalize(uNormalMatrix*aNormal.xyz);
+    
+        vec3 angles = radians(uTheta);
+        vec3 c = cos(angles);
+        vec3 s = sin(angles);
+    
+        mat4 rx = mat4(1.0,  0.0,  0.0, 0.0,
+            0.0,  c.x,  s.x, 0.0,
+            0.0, -s.x,  c.x, 0.0,
+            0.0,  0.0,  0.0, 1.0);
+    
+        mat4 ry = mat4(c.y, 0.0, -s.y, 0.0,
+            0.0, 1.0,  0.0, 0.0,
+            s.y, 0.0,  c.y, 0.0,
+            0.0, 0.0,  0.0, 1.0);
+    
+    
+        mat4 rz = mat4(c.z, s.z, 0.0, 0.0,
+            -s.z,  c.z, 0.0, 0.0,
+            0.0,  0.0, 1.0, 0.0,
+            0.0,  0.0, 0.0, 1.0);
+    
+    
+        gl_Position = uProjectionMatrix * uModelViewMatrix * vPosition;
+        gl_Position = rz * ry * rx * gl_Position;
+        gl_PointSize = 100.0;
+
+      }
+    </script>
+
+    <script id="vertex-shader2" type="x-shader/x-vertex">
+      #version 300 es
+      
+          in vec4 vPosition;
+          in vec3 vColors;
+          out vec4 aColor;
+            void
+            main()
+            {
+              gl_Position = vPosition;
+              aColor = vec4(vColors, 1.0);
+              gl_PointSize = 3.0;
+            }
+    </script>
+
+      
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+#version 300 es
+      precision highp float;
+
+      uniform vec4 uAmbientProduct;
+      uniform vec4 uDiffuseProduct;
+      uniform vec4 uSpecularProduct;
+      uniform float uShininess;
+
+      in vec3 N, L, E;
+      out vec4 fragColor;
+
+      void
+      main()
+      {
+        vec3 H = normalize( L + E );
+        vec4 ambient = uAmbientProduct;
+    
+        float Kd = max( dot(L, N), 0.0 );
+        vec4  diffuse = Kd*uDiffuseProduct;
+    
+        float Ks = pow( max(dot(N, H), 0.0), uShininess );
+        vec4  specular = Ks * uSpecularProduct;
+    
+        if( dot(L, N) < 0.0 ) specular = vec4(0.0, 0.0, 0.0, 1.0);
+    
+        fragColor = ambient + diffuse +specular;
+        fragColor.a = 1.0;    
+      }
+    </script>
+
+    <script id="fragment-shader2" type="x-shader/x-fragment">
+      #version 300 es
+            precision highp float;
+            in vec4 aColor;
+            out vec4 fragColor;
+      
+            void
+            main()
+            {
+              fragColor = aColor;
+            }
+    </script>
+      
+
+    <script src="http://interactivecomputergraphics.com/8E/Code%20update/Common/initShadersES6.js"></script>
+    <script src="http://interactivecomputergraphics.com/8E/Code%20update/Common/MVnew.js"></script>    
+    <script type="text/javascript" src="space.js"></script>
+  </head>
+
+  <body style="background-color:rgb(0, 0, 0);"> <!--// color for overall window -->
+    <br><br><br><br><br>  
+    <center> 
+    <canvas id="gl-canvas" width="1024" height="1024"> <!-- //canvas width and height -->
+      Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas> 
+    <p></p>
+    <button id= "xButton" onclick = "closer()">move planet closer to parent star</button>
+    <button id= "yButton" onclick="further()">move planet away from parent star</button>
+    </center> 
+    <div style="text-align:center">
+      <a href="../saad-15/jam1.html" target="_parent"><button>Next Render</button></a>
+      </div>
+  </body>
+</html>

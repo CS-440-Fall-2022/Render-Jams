@@ -1,0 +1,7 @@
+This is just a cool effet I created with prticle systems
+I used the following library for rendering particle systems on GPU: https://github.com/flimshaw/THREE.GPUParticleSystem.git
+Although I origanlly tried to create the particle system from scratch on my own as well.
+But there were a bunch of complications invloved like how to make particles know of each others position while rendeing on GPU. Which all seemed a bit out of scope of this assignment, so this library takes care or a lot of lower level complications in creating a particle system. Although understanding this library was then a big challenge on it own due to lack of documentation.
+Originally I was aiming to create a fire like effect but in doing so I stumbled upon this twisting effect of particles. 
+Here we have a different effect which models something like some sort of energy originating from a spot and turing around it and slowly fade away.
+This is something which you may see in anime where a charater powers up so you have such effects around the character.
