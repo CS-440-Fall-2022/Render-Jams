@@ -193,7 +193,7 @@ function render()
 
     modelViewMatrix = lookAt(eye, at , up);
     projectionMatrix = ortho(left, right, bbottom, ttop, near, far);
-    nMatrix = normalMatrix(modelViewMatrix, true);
+    nMatrix = normalMatrix(modelViewMatrix, false);
 
 
     gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix));
