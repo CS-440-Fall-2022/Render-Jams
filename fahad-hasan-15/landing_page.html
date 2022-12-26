@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 440: Render Jam</title>
+    <link href='https://fonts.googleapis.com/css?family=Courier Prime' rel='stylesheet'>
+    <style>
+        body {
+            font-family: 'Courier Prime';
+        }
+
+        div {
+            margin-top: 2em;
+            margin-left: 20em;
+            margin-right: 20em;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center;">
+        <h1>
+            <a href="rendered_scene.png">"5 Spheres: A Reflective Odyssey"</a>
+        </h1>
+        <h2>
+            Team: "SPECTRE" - 2 members
+        </h2>
+        <h3>
+            Theme: Reflection
+        </h3>
+    </div>
+    <div>
+        Image Description:
+        <p>
+            Corresponding to the set theme, in short, the rendered image visualizes highly reflective objects
+            positioned in close proximity to each other thereby presenting an interesting recursive mirrored effect.
+            To elaborate on the scene itself, let us present the lay of the land. With resepct to the position of the view plane
+            what we see is the front side of the scene - there are in fact a total of five spheres: top (green),
+            bottom (orange), left (red), right(blue) and back (cyan-green). Moreover, there is a plane positioned
+            in such a manner that is slanted downwards - it is the source of the scene's swarth-like white glow.
+            Speaking with respect to the set theme, the image can be interpreted any which way. One can choose to view
+            it literally - the image satisfies the theme so trivially such that, there is no need to discuss the matter 
+            further. On the other hand, one could, like this team, interpret the image through the lens of self-reflection.
+            To elaboarte, this scene was birthed out of a metacognitive excercise on our actions at the time and as such,
+            we were embroiled in a ad-infinitum recursive loop of self reflection. Thus, for us this image is best thought
+            of as a mental hall of mirrors. Speaking of the
+            <a href="https://www.scratchapixel.com/images/upload/ray-tracing-refresher/rt-mirror-maze.png?">
+            hall of mirrors</a>, that serves material inspiration for the scene itself. Additionally, the lighting and look of the 
+            scene finds its inspiration from <a href="https://www.imdb.com/name/nm0000040/">Stanley Kubrick's</a>
+            <a href="https://www.imdb.com/title/tt0062622/?ref_=nm_knf_c_1">2001: A Space Odyssey</a> and in particular,
+            the so-called, <a href="https://www.youtube.com/watch?v=JY-ajPNQMh0">"Stargate" sequence</a>.
+            Well, there is not much else to say then to ask you to watch the film mentioned beforehand 
+            and to take a look at our render (click the "5 Spheres: A Reflective Odyssey" heading). 
+        </p>
+    </div>
+    <div>
+        Technical Deatils:
+        <p>
+            Moving onto the technical details of the scene itself, the scene concerns itself with the 
+            notion of indirect illumination in a scene. As such, to be precise, this image is the 
+            result of Whitted-style ray-tracing - rather than being simply content with primary rays alone, 
+            we take into account secondary rays that is, we are also now tracing reflected rays as 
+            they bounce between reflective objects in the scene. As such, The part of the indirect
+            illumination that this models is the specular-to-specular light transport with
+            perfect specular reflection. Now, in order to actually achieve the aforementioned effect, the scene
+            had to be placed/contain reflective materials and surfaces. As such, the main objects of contention, 
+            the spheres are dressed with a traditional 'Reflective' material that allows surfaces to be
+            rendered with ambient, diffused and specular direct illumination, as well as reflections. Furthermore,
+            this material has a 'Perfect Specular' BRDF - this allows for perfect mirror reflection to be implemented.
+            For reflection implementation, the aforementioned BRDF is what caters to the compuatation of the 
+            direction of the reflected ray, as well as computing the reflected radiance. Having established some
+            of the more setup deatils out of the way, let us explicate more on the reflective phenomenon itself.
+            Now, the spheres are arranged so that their centers are effectively the vertices of tetrahedron
+            - given the 5 spheres the arrangement is effectively that of 2 tetrahedrons with their bases 
+            fused together. Additionally, the radii of the spheres are such that they are just about touching
+            (note, none of the spheres overlap with each other). Here, with the precise scene arrangement, the
+            set BRDF parameters - ka (ambient reflection coefficient) = 1.0; kr (reflection coefficient)=1.0; ks
+            (specular reflection coefficient) = 0.5; cr (reflection color) = 1.0; exp (Phong exponent) = 100.0 - and
+            a max_depth value of 200, we emphasize the inter-reflections of the spheres, which are consequently quite
+            bright (and the specular highlight on the spheres are more concentrated). Now, we would ask for one to
+            take a moment and look at the render itself and in particular, focus on the hourglass shaped space
+            that forms between the spheres. We leave this open to interpretation but to us, the pattern formed
+            very closely resembles the <a href="https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle">Sierpinski Gasket</a>,
+            a mathematical fractal. While we cannot fully explain the patterned form what we can do
+            is posit that it has something to do with the similar recursive structures - the gasket being the subdivision
+            of triangles a set number of times while the scene itself is just reflections of spheres. As for additional remaining 
+            technical details, the scene is lit by three sources of light: (i) ambient light at 0.25 luminance
+            (ii) Point light in the top-left corner of the scene at 3.0 luminance (iii) Directional light in the top-left
+            corner of the scene at 2.0 luminance. Furthermore, a whitted tracer is used given that the scene is 
+            concerned with perfect specular reflection. 
+        </p>
+        <p>
+            Given that the scene is ray-traced thus, details of the platform on which rendering took place, must be 
+            noted:
+                <ul>
+                    <li>
+                        Processor: Intel 9th Gen i7
+                    </li>
+                    <li>
+                        Memory: 16 GB RAM
+                    </li>
+                    <li>
+                        Render Resolution: 4096x4096
+                    </li>
+                    <li>
+                        Render Time: ~23 seconds.
+                    </li>
+                </ul>
+        </p>
+    </div>
+    <div>
+        Credits and References:
+        <p>
+            Only one single reference was used in the creation of this scene that is the, course
+            text-book for the ray-tracing module i.e., Kevin Suffern's 'Ray-Tracing from the 
+            Ground Up'. The text itself guides completely and wholly as to the implementation and the 
+            theoretical explanations of the aspects laid beforehand thus, credit where credit is due - the book
+            is like a guided project for building a ray-tracer and as so, we yield it as such.
+        </p>
+    </div>
+    <div style="text-align:center">
+        <a href="../saad-15/jam1.html" target="_parent"><button>Next Render</button></a>
+        </div>
+</body>
+</html>
